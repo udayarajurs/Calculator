@@ -1,8 +1,18 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+} from 'react-native';
 import Button from './src/components/Button';
 import Row from './src/components/Row';
 import calculator, {initialState} from './util/calculator';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 // create functional component of App
 const App = () => {
@@ -13,12 +23,45 @@ const App = () => {
     setState(state => calculator(type, value, state));
   };
 
-  return (
-    <View style={styles.container}>
-      {/* Status bar here */}
-      <SafeAreaView>
-        <Text style={styles.value}>{state.displayValue}</Text>
+  console.log(state);
 
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Status bar here */}
+
+      <View
+        style={{
+          flex: 0.2,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+        <Image
+          source={require('./src/assets/icon_png/logo.png')}
+          style={{
+            width: WIDTH * 0.3,
+            height: HEIGHT * 0.04,
+            marginTop: 25,
+            marginStart: 15,
+          }}
+        />
+
+        <Image
+          source={require('./src/assets/icon_png/user.png')}
+          style={{
+            width: 40,
+            height: 40,
+            marginTop: 20,
+            marginRight: 15,
+          }}
+        />
+      </View>
+
+      <View style={{flex: 0.8, justifyContent: 'flex-end'}}>
+        <Text style={styles.value}>
+          {state?.expression === state.displayValue ? '' : state?.expression}
+        </Text>
+
+        <Text style={styles.value}>{state.displayValue}</Text>
         {/* Create component Row */}
         <Row>
           <Button
@@ -45,7 +88,6 @@ const App = () => {
             onPress={() => handleTap('operator', '/')}
           />
         </Row>
-
         {/* Number */}
         <Row>
           <Button text="7" onPress={() => handleTap('number', 7)} />
@@ -57,7 +99,6 @@ const App = () => {
             onPress={() => handleTap('operator', '*')}
           />
         </Row>
-
         <Row>
           <Button text="4" onPress={() => handleTap('number', 4)} />
           <Button text="5" onPress={() => handleTap('number', 5)} />
@@ -68,7 +109,6 @@ const App = () => {
             onPress={() => handleTap('operator', '-')}
           />
         </Row>
-
         <Row>
           <Button text="1" onPress={() => handleTap('number', 1)} />
           <Button text="2" onPress={() => handleTap('number', 2)} />
@@ -79,14 +119,13 @@ const App = () => {
             onPress={() => handleTap('operator', '+')}
           />
         </Row>
-
         <Row>
           <Button text="0" onPress={() => handleTap('number', 0)} />
           <Button text="." onPress={() => handleTap('number', '.')} />
           <Button text="=" theme="primary" onPress={() => handleTap('equal')} />
         </Row>
-      </SafeAreaView>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 
