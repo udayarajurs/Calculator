@@ -23,8 +23,6 @@ const App = () => {
     setState(state => calculator(type, value, state));
   };
 
-  console.log(state);
-
   return (
     <SafeAreaView style={styles.container}>
       {/* Status bar here */}
